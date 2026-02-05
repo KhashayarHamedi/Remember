@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+  body {
+    @apply bg-surface text-ink font-sans text-body;
+  }
+}
+
+/* Soft radial glow behind hero (opacity < 6%) — design contract */
+.hero-glow {
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 40%,
+    hsl(140 12% 42% / 0.05),
+    transparent 70%
+  );
+}
