@@ -6,11 +6,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { spring } from "@/app/lib/motion";
 
 const navLinks = [
+  { href: "#sound", label: "Sound" },
   { href: "#about", label: "About" },
   { href: "#benefits", label: "Benefits" },
   { href: "#experience", label: "Experience" },
   { href: "#testimonials", label: "Words" },
-  { href: "#begin", label: "Begin" },
+  { href: "#feelings", label: "Begin" },
 ];
 
 export function Header() {

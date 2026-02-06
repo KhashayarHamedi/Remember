@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans, Crimson_Text } from "next/font/google";
+import { AmbientSound } from "@/app/components/AmbientSound";
 import "./globals.css";
 
 const ibmPlexSans = IBM_Plex_Sans({
@@ -36,7 +37,10 @@ export default function RootLayout({
       lang="en"
       className={`${ibmPlexSans.variable} ${crimsonText.variable}`}
     >
-      <body className="min-h-screen">{children}</body>
+      <body className="min-h-screen" suppressHydrationWarning>
+        {children}
+        <AmbientSound />
+      </body>
     </html>
   );
 }

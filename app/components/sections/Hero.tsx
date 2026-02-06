@@ -37,8 +37,10 @@ export function Hero() {
             transition={{ ...spring.gentle, delay: 0.4 }}
           >
             <a
-              href="#begin"
+              href="#feelings"
+              data-testid="begin-button"
               className="inline-block rounded-sm border border-ink/20 bg-ink px-6 py-3 text-small font-medium text-surface transition-transform hover:scale-[1.02] active:scale-[0.98]"
+              aria-label="Begin — go to how you feel"
             >
               Begin
             </a>

@@ -43,7 +43,7 @@ export function CallToAction() {
             transition={{ ...spring.gentle, delay: 0.15 }}
           >
             <a
-              href="#"
+              href="#feelings"
               className="inline-block rounded-sm border border-ink/20 bg-ink px-8 py-3.5 text-body font-medium text-surface transition-transform hover:scale-[1.02] active:scale-[0.98]"
               aria-label="Begin your practice"
             >

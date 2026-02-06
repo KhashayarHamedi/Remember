@@ -5,6 +5,8 @@
 @layer base {
   html {
     @apply antialiased;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
   }
   body {
     @apply bg-surface text-ink font-sans text-body;
