@@ -1,29 +1,5 @@
-import { Header } from "@/app/components/layout/Header";
-import { Footer } from "@/app/components/layout/Footer";
-import { Hero } from "@/app/components/sections/Hero";
-import { FeelingsSection } from "@/app/components/sections/FeelingsSection";
-import { SoundSection } from "@/app/components/sections/SoundSection";
-import { About } from "@/app/components/sections/About";
-import { Benefits } from "@/app/components/sections/Benefits";
-import { GuidedExperience } from "@/app/components/sections/GuidedExperience";
-import { Testimonials } from "@/app/components/sections/Testimonials";
-import { CallToAction } from "@/app/components/sections/CallToAction";
+import { HomeFlow } from "@/app/components/HomeFlow";
 
 export default function Home() {
-  return (
-    <>
-      <Header />
-      <main>
-        <Hero />
-        <SoundSection />
-        <FeelingsSection />
-        <About />
-        <Benefits />
-        <GuidedExperience />
-        <Testimonials />
-        <CallToAction />
-      </main>
-      <Footer />
-    </>
-  );
+  return <HomeFlow />;
 }

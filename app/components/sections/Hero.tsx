@@ -3,11 +3,15 @@
 import { motion } from "framer-motion";
 import { spring } from "@/app/lib/motion";
 
-export function Hero() {
+interface HeroProps {
+  onBeginClick?: () => void;
+}
+
+export function Hero({ onBeginClick }: HeroProps) {
   return (
     <section
       data-testid="hero"
-      className="relative flex min-h-[85vh] items-center justify-start bg-surface bg-noise bg-cover bg-center pt-20"
+      className="relative flex min-h-[85vh] items-center justify-start bg-surface bg-noise bg-cover bg-center pt-24 pb-hero-y lg:pb-hero-y-lg"
       aria-label="Introduction"
     >
       <div className="hero-glow absolute inset-0 pointer-events-none" />
@@ -36,14 +40,26 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...spring.gentle, delay: 0.4 }}
           >
-            <a
-              href="#feelings"
-              data-testid="begin-button"
-              className="inline-block rounded-sm border border-ink/20 bg-ink px-6 py-3 text-small font-medium text-surface transition-transform hover:scale-[1.02] active:scale-[0.98]"
-              aria-label="Begin — go to how you feel"
-            >
-              Begin
-            </a>
+            {onBeginClick ? (
+              <button
+                type="button"
+                data-testid="begin-button"
+                onClick={onBeginClick}
+                className="inline-block rounded-sm border border-ink/20 bg-ink px-6 py-3 text-small font-medium text-surface transition-transform hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2"
+                aria-label="Begin — how do you feel today?"
+              >
+                Begin
+              </button>
+            ) : (
+              <a
+                href="#feelings"
+                data-testid="begin-button"
+                className="inline-block rounded-sm border border-ink/20 bg-ink px-6 py-3 text-small font-medium text-surface transition-transform hover:scale-[1.02] active:scale-[0.98]"
+                aria-label="Begin — go to how you feel"
+              >
+                Begin
+              </a>
+            )}
           </motion.div>
         </div>
       </div>

@@ -13,11 +13,41 @@
   }
 }
 
-/* Soft radial glow behind hero (opacity < 6%) — design contract */
+/* Subtle radial gradient: center ivory → edge warm gray (low opacity) */
+.zen-bg {
+  background: radial-gradient(
+    ellipse 100% 80% at 50% 0%,
+    #FDFAF5 0%,
+    rgba(248, 245, 240, 0.97) 60%,
+    rgba(235, 230, 223, 0.95) 100%
+  );
+}
+
+/* Hero glow — sage accent very subtle */
 .hero-glow {
   background: radial-gradient(
     ellipse 80% 60% at 50% 40%,
-    hsl(140 12% 42% / 0.05),
+    rgba(167, 190, 174, 0.06),
     transparent 70%
   );
 }
+
+/* Glassmorphism: sparingly for modals, selected pills, dashboard cards */
+.glass {
+  @apply backdrop-blur-sm bg-white/20 border border-white/10 shadow-inner;
+}
+
+.glass-dark {
+  @apply backdrop-blur-md bg-black/20 border border-white/10;
+}
+
+/* Sanctuary: adaptive atmosphere */
+.sanctuary-morning {
+  background: radial-gradient(ellipse 120% 80% at 50% 0%, rgba(253, 250, 245, 1) 0%, rgba(248, 245, 240, 0.98) 50%, rgba(240, 235, 228, 0.95) 100%);
+}
+.sanctuary-evening {
+  background: radial-gradient(ellipse 100% 100% at 50% 30%, rgba(245, 242, 238, 1) 0%, rgba(235, 230, 225, 0.98) 40%, rgba(225, 218, 212, 0.95) 100%);
+}
+.sanctuary-high-contrast .text-ink-muted { color: #1F1A16; }
+.sanctuary-high-contrast .text-ink-subtle { color: #4A4541; }
+.sanctuary-high-contrast .text-accent { color: #5a7a66; }

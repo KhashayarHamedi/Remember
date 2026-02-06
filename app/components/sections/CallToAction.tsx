@@ -4,7 +4,11 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { spring } from "@/app/lib/motion";
 
-export function CallToAction() {
+interface CallToActionProps {
+  onBeginClick?: () => void;
+}
+
+export function CallToAction({ onBeginClick }: CallToActionProps) {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
@@ -42,13 +46,24 @@ export function CallToAction() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ ...spring.gentle, delay: 0.15 }}
           >
-            <a
-              href="#feelings"
-              className="inline-block rounded-sm border border-ink/20 bg-ink px-8 py-3.5 text-body font-medium text-surface transition-transform hover:scale-[1.02] active:scale-[0.98]"
-              aria-label="Begin your practice"
-            >
-              Begin
-            </a>
+            {onBeginClick ? (
+              <button
+                type="button"
+                onClick={onBeginClick}
+                className="inline-block rounded-sm border border-ink/20 bg-ink px-8 py-3.5 text-body font-medium text-surface transition-transform hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+                aria-label="Begin your practice"
+              >
+                Begin
+              </button>
+            ) : (
+              <a
+                href="#feelings"
+                className="inline-block rounded-sm border border-ink/20 bg-ink px-8 py-3.5 text-body font-medium text-surface transition-transform hover:scale-[1.02] active:scale-[0.98]"
+                aria-label="Begin your practice"
+              >
+                Begin
+              </a>
+            )}
           </motion.div>
         </div>
       </div>

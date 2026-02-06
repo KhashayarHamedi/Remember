@@ -71,12 +71,12 @@ A serene minimalist wellness site: choose how you feel, get a tailored ritual (m
    **URL:** [http://localhost:3000](http://localhost:3000)
 
 4. **Verification checklist**
-   - **Begin works:** Click “Begin” (hero or nav) → page smooth-scrolls to “How do you feel today?” and the feeling chips are visible.
-   - **Feelings selectable:** Click a chip (e.g. “Calm”, “Stressed”) → it highlights; ritual block appears below with meditation, self-care, journaling prompt, and optional Spotify link.
-   - **Ritual updates instantly:** Changing selection updates the ritual content immediately.
-   - **Journaling autosaves:** Type in “Your reflection” → refresh page → text is still there (localStorage).
-   - **Save my ritual:** With a feeling selected, click “Save my ritual” → Mood Card appears with feeling, mantra, action; “Copy text” copies to clipboard and shows “Copied.”
-   - **Animations:** Scroll reveals are subtle (opacity + slight y); no layout shift; 60fps feel.
+   - **Begin opens modal:** Click “Begin” (hero or nav) → full-screen modal “How do you feel today?” with grouped feeling pills; Escape or Close dismisses.
+   - **Feeling select → ritual:** In modal, click a pill (e.g. “Calm”) → modal closes, page scrolls to “Your ritual”; ritual card appears with meditation, self-care, journaling prompt, Spotify link (staggered calm animation).
+   - **Feelings section:** On page, pills in “Your ritual” also select/change feeling; ritual updates instantly.
+   - **Reflection:** Type in “Your reflection” → draft autosaves to localStorage (debounced). Click “Save Reflection” → entry saved to My Journey, textarea clears, checkmark animation; “My Journey” appears in nav.
+   - **My Journey:** Open `/journey` or click “My Journey” in nav → “Your Remembered Moments”, wavy viz, insight cards (most remembered feeling, recent reflections, quiet streak), timeline of entries; “Start a new moment” → home with modal open; “Copy summary” → clipboard.
+   - **Animations:** Modal and ritual use calm springs; no layout shift; 60fps feel.
 
 5. **Scripts**
    ```bash
@@ -85,6 +85,7 @@ A serene minimalist wellness site: choose how you feel, get a tailored ritual (m
    npm run build       # next build
    npm run start       # serve production
    ```
+   Optional: `pnpm install` and `pnpm dev` work the same.
 
 ---
 

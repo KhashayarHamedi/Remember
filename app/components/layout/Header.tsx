@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { spring } from "@/app/lib/motion";
+import { getJourneyEntries } from "@/app/lib/journey";
 
 const navLinks = [
   { href: "#sound", label: "Sound" },
@@ -11,18 +12,46 @@ const navLinks = [
   { href: "#benefits", label: "Benefits" },
   { href: "#experience", label: "Experience" },
   { href: "#testimonials", label: "Words" },
-  { href: "#feelings", label: "Begin" },
 ];
 
-export function Header() {
+interface HeaderProps {
+  onBeginClick?: () => void;
+}
+
+export function Header({ onBeginClick }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [hasJourneyEntries, setHasJourneyEntries] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    setHasJourneyEntries(getJourneyEntries().length > 0);
+    const handler = () => setHasJourneyEntries(getJourneyEntries().length > 0);
+    window.addEventListener("journey-updated", handler);
+    return () => window.removeEventListener("journey-updated", handler);
+  }, []);
+
+  const beginAction = onBeginClick ? (
+    <button
+      type="button"
+      onClick={() => {
+        onBeginClick();
+        setMobileOpen(false);
+      }}
+      className="text-small text-ink-muted transition-colors hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+    >
+      Begin
+    </button>
+  ) : (
+    <Link href="#feelings" className="text-small text-ink-muted transition-colors hover:text-ink">
+      Begin
+    </Link>
+  );
 
   return (
     <header
@@ -41,6 +70,22 @@ export function Header() {
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Main">
+          {hasJourneyEntries && (
+            <>
+              <Link
+                href="/journey"
+                className="text-small text-ink-muted transition-colors hover:text-ink"
+              >
+                My Journey
+              </Link>
+              <Link
+                href="/sanctuary"
+                className="text-small text-ink-muted transition-colors hover:text-ink"
+              >
+                My Sanctuary
+              </Link>
+            </>
+          )}
           {navLinks.map(({ href, label }) => (
             <Link
               key={href}
@@ -50,6 +95,7 @@ export function Header() {
               {label}
             </Link>
           ))}
+          {beginAction}
         </nav>
 
         <button
@@ -83,6 +129,24 @@ export function Header() {
             className="overflow-hidden border-t border-ink/10 bg-surface md:hidden"
           >
             <nav className="flex flex-col gap-1 px-6 py-6" aria-label="Mobile">
+              {hasJourneyEntries && (
+                <>
+                  <Link
+                    href="/journey"
+                    className="py-2 text-body-lg text-ink-muted transition-colors hover:text-ink"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    My Journey
+                  </Link>
+                  <Link
+                    href="/sanctuary"
+                    className="py-2 text-body-lg text-ink-muted transition-colors hover:text-ink"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    My Sanctuary
+                  </Link>
+                </>
+              )}
               {navLinks.map(({ href, label }) => (
                 <Link
                   key={href}
@@ -93,6 +157,26 @@ export function Header() {
                   {label}
                 </Link>
               ))}
+              {onBeginClick ? (
+                <button
+                  type="button"
+                  className="py-2 text-left text-body-lg text-ink-muted transition-colors hover:text-ink"
+                  onClick={() => {
+                    onBeginClick();
+                    setMobileOpen(false);
+                  }}
+                >
+                  Begin
+                </button>
+              ) : (
+                <Link
+                  href="#feelings"
+                  className="py-2 text-body-lg text-ink-muted transition-colors hover:text-ink"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Begin
+                </Link>
+              )}
             </nav>
           </motion.div>
         )}
