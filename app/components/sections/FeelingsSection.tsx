@@ -15,6 +15,30 @@ import Image from "next/image";
 
 const STORAGE_KEY_DRAFT = "remember_journal_draft";
 
+// Soft tones per feeling: all within muted sage family so the UI stays calm.
+const FEELING_TONES: Record<FeelingId, string> = {
+  calm: "rgba(167, 190, 174, 0.30)",
+  peaceful: "rgba(167, 190, 174, 0.26)",
+  content: "rgba(167, 190, 174, 0.24)",
+  happy: "rgba(167, 190, 174, 0.22)",
+  energized: "rgba(167, 190, 174, 0.22)",
+  motivated: "rgba(167, 190, 174, 0.20)",
+  grateful: "rgba(167, 190, 174, 0.24)",
+  hopeful: "rgba(167, 190, 174, 0.26)",
+  stressed: "rgba(167, 190, 174, 0.18)",
+  anxious: "rgba(167, 190, 174, 0.18)",
+  sad: "rgba(167, 190, 174, 0.19)",
+  lonely: "rgba(167, 190, 174, 0.19)",
+  angry: "rgba(167, 190, 174, 0.17)",
+  frustrated: "rgba(167, 190, 174, 0.17)",
+  tired: "rgba(167, 190, 174, 0.20)",
+  exhausted: "rgba(167, 190, 174, 0.20)",
+  overwhelmed: "rgba(167, 190, 174, 0.18)",
+  unfocused: "rgba(167, 190, 174, 0.18)",
+  restless: "rgba(167, 190, 174, 0.19)",
+  numb: "rgba(167, 190, 174, 0.17)",
+};
+
 interface FeelingsSectionProps {
   selectedFeeling?: FeelingId | null;
   onFeelingChange?: (id: FeelingId | null) => void;
@@ -136,30 +160,42 @@ export function FeelingsSection({
 
         <div
           data-testid="feelings-picker"
-          className="mt-10 flex flex-wrap gap-2"
+          className="mt-10 flex flex-wrap justify-center gap-3 max-w-3xl mx-auto"
           role="group"
           aria-label="Select how you feel"
         >
-          {FEELINGS.map((f) => (
-            <motion.button
-              key={f.id}
-              type="button"
-              data-testid={`feeling-pill-${f.id}`}
-              initial={{ opacity: 0, y: 6 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ ...spring.gentle, delay: 0.02 * FEELINGS.indexOf(f) }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className={`rounded-3xl border px-6 py-3 text-body transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 ${
-                selectedId === f.id
-                  ? "border-accent bg-accent/30 text-ink"
-                  : "border-ink/15 bg-surface-muted/50 text-ink-muted hover:border-accent/50 hover:bg-accent/10 hover:text-ink"
-              }`}
-              onClick={() => setSelectedId(selectedId === f.id ? null : (f.id as FeelingId))}
-            >
-              {f.label}
-            </motion.button>
-          ))}
+          {FEELINGS.map((f, index) => {
+            const tone = FEELING_TONES[f.id as FeelingId];
+            const isSelected = selectedId === f.id;
+
+            return (
+              <motion.button
+                key={f.id}
+                type="button"
+                data-testid={`feeling-pill-${f.id}`}
+                initial={{ opacity: 0, y: 6 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ ...spring.gentle, delay: 0.02 * index }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className={`rounded-3xl border px-6 py-3 text-body transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 ${
+                  isSelected
+                    ? "border-accent bg-accent/30 text-ink"
+                    : "border-ink/15 bg-surface-muted/50 text-ink-muted hover:border-accent/50 hover:bg-accent/10 hover:text-ink"
+                }`}
+                style={
+                  isSelected || !tone
+                    ? undefined
+                    : { backgroundColor: tone }
+                }
+                onClick={() =>
+                  setSelectedId(isSelected ? null : (f.id as FeelingId))
+                }
+              >
+                {f.label}
+              </motion.button>
+            );
+          })}
         </div>
 
         <AnimatePresence mode="wait">
