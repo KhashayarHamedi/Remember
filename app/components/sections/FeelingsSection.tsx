@@ -10,6 +10,8 @@ import {
   type RitualPayload,
 } from "@/app/lib/rituals";
 import { addJourneyEntry } from "@/app/lib/journey";
+import { getBookForFeeling, getBookCoverUrl } from "@/app/lib/books";
+import Image from "next/image";
 
 const STORAGE_KEY_DRAFT = "remember_journal_draft";
 
@@ -228,6 +230,43 @@ export function FeelingsSection({
                   </a>
                 </motion.div>
               )}
+              {selectedId && (() => {
+                const book = getBookForFeeling(selectedId);
+                return (
+                  <motion.div
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ ...spring.calm, delay: 0.56 }}
+                  >
+                    <h4 className="text-small font-medium uppercase tracking-wide text-ink-subtle">
+                      Suggested read for this moment
+                    </h4>
+                    <div className="mt-3 flex gap-4">
+                      <div className="relative h-40 w-28 shrink-0 overflow-hidden rounded-lg border border-ink/10 bg-surface-muted shadow-sm">
+                        <Image
+                          src={getBookCoverUrl(book)}
+                          alt={`Cover of ${book.title} by ${book.author}`}
+                          fill
+                          className="object-cover"
+                          sizes="112px"
+                          unoptimized
+                        />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="font-serif text-lg font-semibold text-ink">
+                          {book.title}
+                        </p>
+                        <p className="mt-0.5 text-small text-ink-muted">
+                          {book.author}
+                        </p>
+                        <p className="mt-2 text-body text-ink-subtle">
+                          {book.blurb}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })()}
             </motion.div>
           )}
         </AnimatePresence>
